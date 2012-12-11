@@ -1,0 +1,521 @@
+var xmlhttp
+/*@cc_on @*/
+/*@if (@_jscript_version >= 5)
+  try {
+  xmlhttp=new ActiveXObject("Msxml2.XMLHTTP")
+ } catch (e) {
+  try {
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP")
+  } catch (E) {
+   xmlhttp=false
+  }
+ }
+@else
+ xmlhttp=false
+@end @*/
+if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+ try {
+  xmlhttp = new XMLHttpRequest();
+ } catch (e) {
+  xmlhttp=false
+ }
+}
+function myXMLHttpRequest() {
+  var xmlhttplocal;
+  try {
+    xmlhttplocal= new ActiveXObject("Msxml2.XMLHTTP")
+ } catch (e) {
+  try {
+    xmlhttplocal= new ActiveXObject("Microsoft.XMLHTTP")
+  } catch (E) {
+    xmlhttplocal=false;
+  }
+ }
+
+if (!xmlhttplocal && typeof XMLHttpRequest!='undefined') {
+ try {
+  var xmlhttplocal = new XMLHttpRequest();
+ } catch (e) {
+  var xmlhttplocal=false;
+  alert('couldn\'t create xmlhttp object');
+ }
+}
+return(xmlhttplocal);
+}
+var hex = new Array("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F");
+var i, j, k;
+k = 0;
+for (i = 0; i < 16; i++) {
+    for (j = 0; j < 16; j++) {
+       rgb[k] = hex[i] + hex[j];
+       k++;
+   }
+}
+function rgb(r, g, b) {
+   return('#'+rgb[r]+rgb[g]+rgb[b]);
+}
+var ColorIn= new Array();
+for (i = 1; i <= 5; i++) {
+	ColorIn[i] = new Array();
+}
+
+ColorIn[1][1] = rgb(248, 242, 198);
+ColorIn[1][2] = rgb(234, 227, 181);
+ColorIn[1][3] = rgb(220, 212, 164);
+ColorIn[1][4] = rgb(206, 195, 147);
+ColorIn[1][5] = rgb(192, 180, 130);
+ColorIn[1][6] = rgb(178, 165, 113);
+ColorIn[1][7] = "#A39A5D";
+
+ColorIn[2][1] = rgb(247, 236, 172);
+ColorIn[2][2] = rgb(231, 220, 158);
+ColorIn[2][3] = rgb(215, 204, 140);
+ColorIn[2][4] = rgb(199, 188, 122);
+ColorIn[2][5] = rgb(183, 172, 104);
+ColorIn[2][6] = rgb(167, 156, 86);
+ColorIn[2][7] = "#998D43"; 
+
+ColorIn[3][1] = rgb(247, 236, 158);
+ColorIn[3][2] = rgb(229, 218, 140);
+ColorIn[3][3] = rgb(211, 200, 122);
+ColorIn[3][4] = rgb(193, 182, 104);
+ColorIn[3][5] = rgb(175, 164, 86);
+ColorIn[3][6] = rgb(157, 146, 68);
+ColorIn[3][7] = "#897D2F";
+
+ColorIn[4][1] = rgb(247, 232, 137);
+ColorIn[4][2] = rgb(225, 210, 119);
+ColorIn[4][3] = rgb(203, 188, 101);
+ColorIn[4][4] = rgb(181, 166, 83);
+ColorIn[4][5] = rgb(159, 144, 65);
+ColorIn[4][6] = rgb(137, 122, 47);
+ColorIn[4][7] = "#73681F"; 
+
+ColorIn[5][1] = "#F6E26B";
+ColorIn[5][2] = "#DAC85B";
+ColorIn[5][3] = "#BEAE4B";
+ColorIn[5][4] = "#A2943B";
+ColorIn[5][5] = "#867A2B";
+ColorIn[5][6] = "#6A6019";
+ColorIn[5][7] = "#50470D";
+
+ColorSpy = new Array();
+ColorSpy[1] = "#FFFFFF";
+ColorSpy[2] = "#F1F3F5";
+ColorSpy[3] = "#EBEEF1";
+ColorSpy[4] = "#DEE2E7";
+ColorSpy[5] = "#CCD5DB";
+ColorSpy[6] = "#BCC7CF";
+ColorSpy[7] = "#ACB9C4";
+var timeid = Array();
+var responsestring = Array();
+var myxmlhttp = Array()
+var responseString = new String;
+function isIE() {
+	var useragent = navigator.userAgent;
+	var pos = useragent.indexOf('MSIE');
+	if (pos > -1) {
+		return false;
+	} else {
+		return true;
+	}
+
+}
+
+var mnmxmlhttp = Array();
+var mnmString = Array();
+var mnmPrevColor = Array();
+
+function menealo (user, id, htmlid, md5) {
+	if (xmlhttp) {
+		url = "/menealo.php";
+		content="id="+id+"&user="+user+"&md5="+md5;
+		mnmxmlhttp[htmlid] = new myXMLHttpRequest();
+		if (mnmxmlhttp) {
+			mnmxmlhttp[htmlid].open("POST",url,true);
+			mnmxmlhttp[htmlid].setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+			mnmxmlhttp[htmlid].send(content);
+			errormatch = new RegExp("^ERROR:");
+			target1 = document.getElementById('mnms-'+htmlid);
+			mnmPrevColor[htmlid] = target1.style.backgroundColor;
+			//target1.style.background = '#c00';
+			target1.style.backgroundColor= '#FF9D9F';
+			mnmxmlhttp[htmlid].onreadystatechange=function() {
+				if (mnmxmlhttp[htmlid].readyState==4) {
+					mnmString[htmlid] = mnmxmlhttp[htmlid].responseText;
+					if (mnmString[htmlid].match(errormatch)) {
+						mnmString[htmlid] = mnmString[htmlid].substring(6, mnmString[htmlid].length);
+						// myclearTimeout(row);
+						// resetrowfull(row);
+						alert(mnmString[htmlid]);
+						changemnmvalues(htmlid, true);
+					} else {
+						changemnmvalues(htmlid, false);
+					}
+				}
+			}
+		}
+	}
+}
+/*	
+  } else {
+    document.forms['submitform'+id].submit();
+  }
+}
+*/
+
+
+
+
+function changemnmvalues(id, error) {
+	split = new RegExp("~--~");
+	b = mnmString[id].split(split);
+	target1 = document.getElementById('mnms-'+id);
+	target2 = document.getElementById('mnmlink-'+id);
+	if (error) {
+		target2.innerHTML = "<span>grrr</span>";
+		return false;
+	}
+	if (b.length <= 3) {
+		target1.innerHTML = b[0];
+		target1.style.backgroundColor = mnmPrevColor[id];
+		target2.innerHTML = "<span>chachi</span>";
+	}
+	return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function waittofade_full(id, shade) {
+  timeid[id] = window.setTimeout("fadeInFull(7, "+shade+",'"+id+"')",100);
+}
+
+function flash(id) {
+  timeid[id] = window.setTimeout("fadeInSpy(7, '"+id+"')",100);
+}
+function alreadydug() {
+  alert("You have already dug this item");
+}
+function alreadydugi() {
+  alert("You have already dug this story (or someone at the same internet address has)\nYou can try logging in and digging then.");
+}
+function myclearTimeout(id) {
+  clearTimeout(timeid[id]);
+} 
+function wrapper_full (id, shade, rowid, changeorder, category, page, t) {
+  if (xmlhttp) {
+    waittofade_full(id, shade);
+    digjfull(id, rowid, changeorder, document.location, category, page, t);
+  } else {
+    document.forms['submitform'+id].submit();
+  }
+}
+function fadeInFull(where, shade, id) {
+  if (where >= 1) {
+    document.getElementById('diggs'+id).style.color = ColorIn[shade][where];
+    if (where > 1) {
+      where -= 1;
+      timeid[id] = window.setTimeout("fadeInFull("+where+","+shade+",'"+id+"')", 100);
+    } else {
+      document.getElementById('main'+id).style.color = ColorIn[shade][where];
+      where -= 1;
+      newshade = shownewcontentfull(id, shade);
+      myclearTimeout(id);
+      timeid[0] = window.setTimeout("fadeOutFull(7, "+newshade+","+id+")",100);      
+    }
+  }
+}
+function fadeOutFull(where, shade, id) {
+  if (where >= 1) {
+    document.getElementById('diggs'+id).style.color = ColorIn[shade][8-where];
+    if (where > 1) {
+      where -= 1;
+      timeid[id] = window.setTimeout("fadeOutFull("+where+","+shade+",'"+id+"')", 100);
+    } else {
+      where -= 1;
+      myclearTimeout(0);
+    }
+  }
+}
+function fadeInSpy(where, id) {
+  if (where >= 1) {
+    document.getElementById('main'+id).style.backgroundColor = ColorSpy[where];
+    if (where > 1) {
+      where -= 1;
+      timeid[id] = window.setTimeout("fadeInSpy("+where+",'"+id+"')", 100);
+    } else {
+      where -= 1;
+      document.getElementById('main'+id).style.backgroundColor = "transparent";
+      myclearTimeout(id);
+    }
+  }
+}
+
+function confirmblock(username) {
+  return(confirm('Are you sure you want to block user '+username+' ?'));
+}
+function reportj(id, code) {
+  url="/reportj?id="+id+"&code="+code;
+  xmlhttp.open("GET",url,true);
+  xmlhttp.onreadystatechange=function() {
+    if (xmlhttp.readyState==4) {
+      alert(xmlhttp.responseText);
+    }
+  }
+  xmlhttp.send(null);
+  return false;
+}
+function updaterating(frm,commentid,commentdiv,tolerance) {
+  url="/setratingj/"+commentid+"/"+frm.ratings.value;
+  xmlhttp.open("GET",url,true);
+  xmlhttp.onreadystatechange=function() {
+	  if (xmlhttp.readyState==4) {
+	    score = xmlhttp.responseText;
+	    document.getElementById('scorediv'+commentid).innerHTML = score;
+	    if (score < tolerance) {
+	      thediv = document.getElementById(commentdiv); 
+	      thediv.innerHTML = '';
+	      frm.ratings.selectedIndex=xmlhttp.responseText;
+	    }
+	  }
+  }
+  //  xmlhttp.setRequestHeader('Accept','message/x-formresult');
+  xmlhttp.send(null);
+  return false;
+}
+function enablebutton(button, button2, target) {
+	var string = target.value; 
+	button2.disabled = false;
+	if (string.length > 0) {
+		button.disabled = false;
+	} else {
+		button.disabled = true;
+	}
+}
+function startlastdigs() {
+	window.setInterval("lastdigs()",10000);
+}
+function startlastdigs_up() {
+	window.setInterval("lastdigs_up()",10000);
+}
+function filldigs() {
+	var s;
+	var url2 = 'last10';
+	s = new myXMLHttpRequest();
+  	s.open("GET",url2,true);
+	s.onreadystatechange=function() {
+	      if (s.readyState == 4) {
+			responsestring2 = s.responseText;	
+      			split = new RegExp("!#-!");
+      			b = responsestring2.split(split);
+	                split2 = new RegExp("~");
+	                c = b[1].split(split2);
+			document.getElementById('diggspy').innerHTML = b[0];
+			do_anim();
+		}
+	}
+	s.send(null);
+  	delete s;
+  	return;
+}
+function filldigs_up() {
+	var s;
+	var url2 = 'last10digg';
+	s = new myXMLHttpRequest();
+  	s.open("GET",url2,true);
+	s.onreadystatechange=function() {
+	      if (s.readyState == 4) {
+			responsestring2 = s.responseText;	
+      			split = new RegExp("!#-!");
+      			b = responsestring2.split(split);
+	                split2 = new RegExp("~");
+	                c = b[1].split(split2);
+			document.getElementById('diggspy').innerHTML = b[0];
+			do_anim();
+		}
+	}
+	s.send(null);
+  	delete s;
+  	return;
+}
+
+function do_anim() {
+    // find all items in c not in ids
+    var notdone = 1;
+    var i = 0;
+    var j = 0;
+    while (notdone) {   
+       if (c[i] != ids[j]) {
+            flash(c[i]); 
+            i++;
+            if (i > c.length) {
+                notdone = 0;
+            }
+       } else {
+            notdone = 0;
+       }
+    }
+    for (i = 0; i < c.length; i++) {
+       ids[i] = c[i];
+    }
+}
+function lastdigs() {
+	if (!spypause) {
+		filldigs();
+	}
+}
+function lastdigs_up() {
+	if (!spypause_up) {
+		filldigs_up();
+	}
+}
+
+function checkit(form) {
+	url = 'checkuser.php?username='+form.username.value;
+	checkitxmlhttp = new myXMLHttpRequest();
+	checkitxmlhttp.open("GET",url,true);
+	checkitxmlhttp.onreadystatechange=function() {
+		if (checkitxmlhttp.readyState==4) {
+			responsestring = checkitxmlhttp.responseText;
+			if (responsestring == 'OK') {
+				document.getElementById('checkitvalue').innerHTML = '<span style="color:black">"'+form.username.value+'": '+responsestring+'</span>';
+				form.submit.disabled = '';
+			} else {
+				document.getElementById('checkitvalue').innerHTML = '<span style="color:red">"'+form.username.value+'": '+responsestring+'</span>';
+				form.submit.disabled = 'disabled';
+			}
+		}
+	}
+	//  xmlhttp.setRequestHeader('Accept','message/x-formresult');
+	checkitxmlhttp.send(null);
+	return false;  
+}
+
+function blankcontent(id) {
+	hovercontent(id);
+	content = '<div id=\'popup\'></div>';
+	return(content);
+}
+function hovercontent (id) {
+  url = '/hovercontent?id='+id;
+  hoverxmlhttp = new myXMLHttpRequest();
+  hoverxmlhttp.open("GET",url,true);
+  hoverxmlhttp.onreadystatechange=function() {
+    if (hoverxmlhttp.readyState==4) {
+      responsestring = hoverxmlhttp.responseText;
+      document.getElementById('popup').innerHTML = responsestring;
+    }
+  }
+  //  xmlhttp.setRequestHeader('Accept','message/x-formresult');
+  hoverxmlhttp.send(null);
+  return('');
+}
+function shownewcontentfull(id, shade) {
+  newshade = shade;
+  if (myxmlhttp[id].readyState!=4) {
+     window.setTimeout("shownewcontentfull("+id+")",300);
+  } else {
+      split = new RegExp("~--~");
+      b = responsestring[id].split(split);
+      if (b.length <= 3) {
+      target1 = document.getElementById('diggs'+id);
+      if (shade != b[1]) {
+		newshade = b[1];
+		target1.className = 'digg-count shade-'+b[1];
+		switch (b[1]) {
+			case '1':
+				target1.style.background = '#FFF299 url(/img/digg-box-1-shade-1.png)';
+				break;
+			case '2':
+				target1.style.background = '#FFF299 url(/img/digg-box-1-shade-2.png)';
+				break;
+			case '3':
+				target1.style.background = '#FFF299 url(/img/digg-box-1-shade-3.png)';
+				break;
+			case '4':
+				target1.style.background = '#FFF299 url(/img/digg-box-1-shade-4.png)';
+				break;
+			case '5':
+				target1.style.background = '#FFF299 url(/img/digg-box-1-shade-5.png)'
+				break;
+		}
+	} else {
+		newshade = shade;
+	}
+   	if (target1.innerHTML.indexOf('digg-friend.png') > 0) {
+		target1.innerHTML = b[0]+'<img src="/img/digg-friend.png" width="21" height="21" alt="A Friend Dugg This Post" />'
+		var img=document.createElement("img");
+		img.src = '/img/digg-friend.png';
+		img.width= '21';
+		img.height= '21';
+		img.alt='A Friend Dugg This Post';
+		old = target1.childNodes[1];
+		target1.replaceChild(img, old);
+      	} else {
+		target1.innerHTML = b[0];
+	}
+	target2 = document.getElementById('diglink'+id);
+      	target2.innerHTML = "<span>dugg</span>";
+	if (b.length == 3) {
+		// single item page - update diggers
+		target3 = document.getElementById('diggers');
+		target3.innerHTML = b[2];
+	}
+	} else {
+		for (i = 0; i < b.length; i++) {
+			target = document.getElementById('enclosure'+i);
+			target.innerHTML = b[i];
+		}
+	}
+  }
+  return(newshade);
+}
+function digjfull(row, id, orderchange, target, category, page, t) {
+  url = "/diginfull";
+  content="id="+id+"&orderchange="+orderchange+"&target="+escape(target)+"&category="+category+"&page="+page+"&t="+t;
+  myxmlhttp[row] = new myXMLHttpRequest();
+  if (myxmlhttp[row]) {
+	myxmlhttp[row].open("POST",url,true);
+	myxmlhttp[row].setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  	myxmlhttp[row].send(content);
+  	errormatch = new RegExp("^ERROR:");
+ 	myxmlhttp[row].onreadystatechange=function() {
+		if (myxmlhttp[row].readyState==4) {
+   		 	responsestring[row] = myxmlhttp[row].responseText;
+			if (responsestring[row].match(errormatch)) {
+				responsestring[row] = responsestring[row].substring(6, responsestring[row].length);
+				myclearTimeout(row);
+				// resetrowfull(row);
+			      	alert(responsestring[row]);
+    			}   
+	  	}
+	}
+  }
+  return false;
+}
+function getdpage(itemid, page, friends) {
+  url="/newdiggers?id="+itemid+"&page="+page+"&friends="+friends;
+  xmlhttp.open("GET",url,true);
+  xmlhttp.onreadystatechange=function() {
+    if (xmlhttp.readyState==4) {
+	target = document.getElementById('diggers');
+	target.innerHTML = xmlhttp.responseText;	
+    }
+  }
+  xmlhttp.send(null);
+  return false;
+	
+}

@@ -1,0 +1,111 @@
+.news-details {
+	position: relative;
+	float: left;
+	padding: 5px 7em 0 0;
+}
+
+* html .news-details {
+	padding-right: 8.5em;
+}
+
+.news-details .tool {
+	display: block;
+	float: left;
+	border-right: 1px solid #ccc;
+	font-size: 11px;
+	padding: 2px 6px;
+}
+.news-details .tool-right {
+	display: block;
+	float: left;
+	font-size: 11px;
+	padding: 2px 6px;
+}
+
+.news-details .comments {
+	background: url(../img/comments.gif) 0 2px no-repeat;
+	padding-left: 18px;
+}
+
+.news-details .comments:hover {
+	padding-left: 18px;
+	background: url(../img/comments.gif) 0 -98px no-repeat;
+}
+
+/* problem dropdown */
+
+.probdrop {
+    position: absolute;
+    top: 4px;
+    right: 0;
+}
+.probdrop, .probdrop ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font: 11px sans-serif;
+    display: inline;
+}
+a.droplinep {
+    white-space: nowrap;
+    display: block;
+    width: 7.5em;
+    font-size: 11px;
+    text-decoration: none;
+    padding: 3px 10px 3px 5px;
+    border-right: 1px solid #59be00;
+    border-left: 1px solid #59be00;
+    color: #59be00;
+    background: #fff url(../img/drop-border.png) 0 100% no-repeat;
+}
+
+a.droplinep:hover {
+    background-color: #E9F5DF;
+    border-right: 1px solid #390;
+    border-left: 1px solid #390;
+    /*position: relative;*/
+    color: #390;
+    font-size: 11px;
+}
+
+ul.news-details li li {
+	border-left: none;
+	float: none;
+	height: 1.3em;
+}
+
+a.toplinep {
+    background: url(../img/down-arrow.png) 100% -100px no-repeat;
+    white-space: nowrap;
+    display: block;
+    width: 7.5em;
+    color: #390;
+    border: 1px solid #690;
+    text-decoration: none;
+    height: 15px;
+    margin: 0;
+    font-size: 11px;
+    padding: 2px 10px 2px 5px;
+    height: 14px;
+}
+
+.probdrop li {
+    float: left;
+    margin-bottom: 0;
+    width: 7em;
+}
+.probdrop li ul li {
+    min-width: 7em;
+}
+.probdrop li ul {
+    position: absolute;
+    width: 7em;
+    _width: 7em;
+    min-width: 75px;
+}
+
+.probdrop li:hover ul, .probdrop li.probhover ul {
+    display: block;
+    left: 0;
+    top: 20px;
+}

@@ -1,0 +1,19 @@
+#AddHandler phpfive .php
+#AddHandler phpfive .inc
+#AddHandler phpfive .cfg
+#Action phpFive /cgi-bin/php.cgi
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Enlaces incorrectos que gotean PR
+RewriteRule ^history.php?id=(.*)$ story.php?redirected_to_permalink=1&id=$1 [L]
+
+# Funcionamiento de Mootion
+RewriteRule ^videoping/([^/]+)/apikey=([^/]+)/? spiderback.php?user=$1&apikey=$2 [L]
+
+RewriteRule ^([0-9]+)-.*/?$ story.php?id=$1&redirected_to_permalink=1 [L]
+RewriteRule ^videos/([0-9]+)-.*/?$ story.php?redirected_to_permalink=1&id=$1 [L]
+
+RewriteRule ^sitemap.*	sitemap.php [L]

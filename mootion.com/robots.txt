@@ -1,0 +1,6 @@
+User-Agent: *
+    Allow: /
+    
+User-Agent: *
+    Disallow: /embed.php
+    Disallow: /trackback.php
