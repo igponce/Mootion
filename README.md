@@ -1,10 +1,12 @@
--= Mootion =-
+Mootion - a video sharing digg site
+===================================
 
 Mootion.com source code (as required by the Affero General Public License).
 
 Video sharing site - digg-style based on meneame.net source code y I&ntilde;igo Gonzalez.
 
--= Quickstart =-
+Quickstart
+----------
 
 Prerequisites:
 
