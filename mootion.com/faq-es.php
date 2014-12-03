@@ -23,8 +23,7 @@ die;
 <ol>
 <li>
 <h4>Who you are?</h4>
-<p>By now, <em>we</em> are <em>just</em>&nbsp;me, <a href="http://exocert.com/Corporate/">I&ntilde;igo Gonz&aacute;lez</a>,
-an a lot of patience (patience and support contributed by <a href="http://lasaventurasdetoxcatl.blogspot.com">toxcatl</a>).
+<p>By now, <em>we</em> are <em>just</em>&nbsp;me, <a href="http://exocert.com/">I&ntilde;igo Gonz&aacute;lez</a>.
 </p>
 </li>
 
