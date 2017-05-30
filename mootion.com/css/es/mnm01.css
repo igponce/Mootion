@@ -98,7 +98,7 @@ html > body, html > body #container {
 }
 
 #sidebar {
-	min-width: 190px
+	min-width: 190px;
 	width: 25%;
 	float: right;
 	background: #FFF; 
